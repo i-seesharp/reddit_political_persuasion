@@ -55,10 +55,8 @@ def preproc1(comment , steps=range(1, 6)):
         pos_lst = ["/", None, " "]
         newline = "\n"
         modified = ""
-        for i in range(len(sentences)):
-            sentence = sentences[i]
-            for j in range(len(sentence)):
-                tok = sentence[j]
+        for sentence in sentences:
+            for tok in sentence:
                 pos_lst[1] = tok.tag_
                 check = tok.lemma_
                 check = re.sub(" ", "-", check) #double check on piazza, going-to

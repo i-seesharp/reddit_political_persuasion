@@ -37,8 +37,8 @@ def accuracy(C):
         for j in range(col):
             total = total + C[i,j]
             if i==j:
-                count = count + C[i,j]
-    return float(count)/float(total)
+                correct = correct + C[i,j]
+    return float(correct)/float(total)
 
 def recall(C):
     ''' Compute recall given Numpy array confusion matrix C. Returns a list of floating point values '''

@@ -100,10 +100,12 @@ def main(args):
             start = args.ID[0] % len(data)
             desired_lines = int(args.max)
             # TODO: read those lines with something like `j = json.loads(line)`
-            for line in data[start : start + desired_lines]:
+            
+            for index in range(start, start+desired_lines, 1):
+                i = index % len(data)
+                line = data[i]
                 j = json.load(line)
                 cat = str(file)
-
                 d = {"cat": cat, "id": j["id"], "body": preproc1(j["body"])}
                 allOutput.append(d)
             # TODO: choose to retain fields from those lines that are relevant to you

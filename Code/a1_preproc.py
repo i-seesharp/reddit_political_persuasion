@@ -51,7 +51,7 @@ def preproc1(comment , steps=range(1, 6)):
 
     if 5 in steps:
         document = nlp(modComm)
-        sentences = document.sentences
+        sentences = document.sents
         pos_lst = ["/", None, " "]
         newline = "\n"
         modified = ""

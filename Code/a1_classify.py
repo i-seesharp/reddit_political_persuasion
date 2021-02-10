@@ -161,11 +161,11 @@ def class32(output_dir, X_train, X_test, y_train, y_test, iBest):
        X_1k: numPy array, just 1K rows of X_train
        y_1k: numPy array, just 1K rows of y_train
    '''
-    X_1k, y_1k, _, _ = train_test_split(X_train, y_train, train_size = 1000)
-    X_5k, y_5k, _, _ = train_test_split(X_train, y_train, train_size = 5000)
-    X_10k, y_10k, _, _ = train_test_split(X_train, y_train, train_size = 10000)
-    X_15k, y_15k, _, _ = train_test_split(X_train, y_train, train_size = 15000)
-    X_20k, y_20k, _, _ = train_test_split(X_train, y_train, train_size = 20000)
+    X_1k,_, y_1k, _ = train_test_split(X_train, y_train, train_size = 1000)
+    X_5k, _, y_5k, _ = train_test_split(X_train, y_train, train_size = 5000)
+    X_10k, _, y_10k, _ = train_test_split(X_train, y_train, train_size = 10000)
+    X_15k, _, y_15k, _ = train_test_split(X_train, y_train, train_size = 15000)
+    X_20k, _, y_20k, _= train_test_split(X_train, y_train, train_size = 20000)
 
     best_classifier = classifiers[idx_to_name[iBest]]
 
@@ -186,12 +186,18 @@ def class32(output_dir, X_train, X_test, y_train, y_test, iBest):
         y_pred = pipeline.predict(X_test)
         accuracies[size] = accuracy(confusion_matrix(y_test, y_pred))
     
+    comment = "One can observe that, as the amount of data starts to increase the test accuracy increases as well. This trend is quite evident from the accuracies above.\n"
+    comment += "This might be because, the lesser data one has the more the chances are that the model's learning are localized to those data points, so data points further away in the high dimensional feature space might not be recognized as well.\n"
+    comment += "Also, lesser data points lead to lower generalizability. Learning patterns in small quantities of data, when in reality these patterns dont really apply when u see a wider scope of possible inputs.\n"
+    comment += "Therefore, the upwards trend - as evident from the accuracy values is justifiable and makes sense intuitively."
+    
     with open(f"{output_dir}/a1_3.2.txt", "w") as outf:
         # For each number of training examples, compute results and write
         # the following output:
         #     outf.write(f'{num_train}: {accuracy:.4f}\n'))
         for size in accuracies:
             outf.write(f'{size}: {accuracies[size]:.4f}\n')
+        outf.write(f'{comment}\n')
 
     return (X_1k, y_1k)
 
@@ -215,8 +221,10 @@ def class33(output_dir, X_train, X_test, y_train, y_test, i, X_1k, y_1k):
     X_train_copy, X_train_copy2 = X_train.copy(), X_train.copy()
     y_train_copy, y_train_copy2 = y_train.copy(), y_train.copy()
 
-    X_5t, y_5t = selector5.fit_transform(X_train_copy, y_train_copy)
-    X_50t, y_50t = selector50.fit_transform(X_train_copy2, y_train_copy2)
+    X_5t = selector5.fit_transform(X_train_copy, y_train_copy)
+    y_5t = y_train.copy()
+    X_50t = selector50.fit_transform(X_train_copy2, y_train_copy2)
+    y_50t = y_train.copy()
     pp = {}
     #Store the corresponding p-values in a HashMap
     pp[5] = selector5.pvalues_
@@ -226,8 +234,8 @@ def class33(output_dir, X_train, X_test, y_train, y_test, i, X_1k, y_1k):
     
 
     trains = {
-        "1k": selector5.transform(X_1k.copy(), y_1k.copy()),
-        "32k": selector5.transform(X_train.copy(), y_train.copy())
+        "1k": [selector5.transform(X_1k.copy()), y_1k.copy()],
+        "32k": [selector5.transform(X_train.copy()), y_train.copy()]
     }
     accuracies = {}
 
@@ -235,7 +243,7 @@ def class33(output_dir, X_train, X_test, y_train, y_test, i, X_1k, y_1k):
         X_t, y_t = trains[size]
         pipeline = make_pipeline(StandardScaler(), best_classifier)
         pipeline.fit(X_t, y_t)
-        y_pred = pipeline.predict(X_test)
+        y_pred = pipeline.predict(selector5.transform(X_test))
         accuracies[size] = accuracy(confusion_matrix(y_test, y_pred))
     
     #New selector for determining best features in 1k and best features in 32k
@@ -252,8 +260,15 @@ def class33(output_dir, X_train, X_test, y_train, y_test, i, X_1k, y_1k):
     indices_1k = set(np.argpartition(p1k_values, 5)[:5])
     indices_32k = set(np.argpartition(p32k_values, 5)[:5])
 
-    feature_intersection = list(indices_1k.intersection(indices_32k))
+    feature_intersection = indices_1k.intersection(indices_32k)
 
+    a = "Index 1 : first_person_pronouns\nIndex  4: coordinating_conjuctions\nIndex 21 : BGL_IMG_STDDEV"
+    b = "More often than not, the lesser the training data, the higher the p-values. The more powerful the feature the lower the p-value.\n"
+    b = b + "As the amount of data increases, a model has more information to figure what the predicitve power of a certain feature. This makes sense"
+    b = b + " as, a features power to segregate features on their ability to separate classes should go down if the model get more information to make that decision."
+    c = "1 : First Person Prounouns, 4 : Coordinating Conjunctions, 21 : BGL_IMG_STDDEV, 149 : Receptiviti_Intellectual, 163 : Receptiviti_Self-Conscious\n"
+    c = c + "The most interesting of the features in (c) are 149(Receptiviti_Intellectual) and 163(Receptiviti_Self-Conscious. There has long been known a correlation betwwen political alliance and intellectual capacity. Some studies have even trie3d to shoe that Left Winged people have higher IQs as copared to their right counterparts.\n"
+    c = c + "As for self conscious, this one is intersting because it posits that the a certain allegiance actually is correlated with the perception of one's image, which the more one thinks about - the more it starts  to make sense."
 
     with open(f"{output_dir}/a1_3.3.txt", "w") as outf:
         # Prepare the variables with corresponding names, then uncomment
@@ -264,12 +279,20 @@ def class33(output_dir, X_train, X_test, y_train, y_test, i, X_1k, y_1k):
             # outf.write(f'{k_feat} p-values: {[round(pval, 4) for pval in p_values]}\n')
         for k in pp:
             p_values = pp[k]
-            outf.write(f'{k} p-values: {[format(pval) for pval in p_values]}\n')
+            indices = np.argpartition(p_values, k)[:k]
+            curr = []
+            for index in indices:
+                curr.append(p_values[index])
+            outf.write(f'{k} p-values: {[format(pval) for pval in curr]}\n')
         
         outf.write(f'Accuracy for 1k: {accuracies["1k"]:.4f}\n')
         outf.write(f'Accuracy for full dataset: {accuracies["32k"]:.4f}\n')
         outf.write(f'Chosen feature intersection: {feature_intersection}\n')
         outf.write(f'Top-5 at higher: {indices_32k}\n')
+        outf.write(f'Part (a) : {a}\n')
+        outf.write(f'Part (b) : {b}\n')
+        outf.write(f'Part (c) : {c}\n')
+
 
 
 def class34(output_dir, X_train, X_test, y_train, y_test, i):
@@ -319,7 +342,7 @@ def class34(output_dir, X_train, X_test, y_train, y_test, i):
     for index in range(len(classifiers)): #5 total classifiers
         if i==index:
             continue
-        val = ttest_rel(best_vector, accuracies[idx_to_name[index]])
+        _, val = ttest_rel(best_vector, accuracies[idx_to_name[index]])
         p_values.append(val)
 
 
@@ -355,4 +378,8 @@ if __name__ == "__main__":
 
     # TODO : complete each classification experiment, in sequence.
     # Perform experiment 3.1
-    class31(args.output_dir, X_train, X_test, y_train, y_test)
+    bestIndex = class31(args.output_dir, X_train, X_test, y_train, y_test)
+    X_k, y_k = class32(args.output_dir, X_train, X_test, y_train, y_test, bestIndex)
+    class33(args.output_dir, X_train, X_test, y_train, y_test, bestIndex, X_k, y_k)
+    class34(args.output_dir, X_train, X_test, y_train, y_test, bestIndex)
+    

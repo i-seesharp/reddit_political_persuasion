@@ -1,0 +1,9 @@
+1k: 0.4223
+5k: 0.4644
+10k: 0.4794
+15k: 0.4720
+20k: 0.4815
+One can observe that, as the amount of data starts to increase the test accuracy increases as well. This trend is quite evident from the accuracies above.
+This might be because, the lesser data one has the more the chances are that the model's learning are localized to those data points, so data points further away in the high dimensional feature space might not be recognized as well.
+Also, lesser data points lead to lower generalizability. Learning patterns in small quantities of data, when in reality these patterns dont really apply when u see a wider scope of possible inputs.
+Therefore, the upwards trend - as evident from the accuracy values is justifiable and makes sense intuitively.

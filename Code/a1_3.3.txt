@@ -1,0 +1,14 @@
+5 p-values: ['0.0', '0.0', '0.0', '0.0', '0.0']
+50 p-values: ['1.908770814945555e-309', '0.0', '0.0', '8.937215052991688e-308', '0.0', '4.701118936621176e-252', '2.569059611263521e-281', '1.9883668773486972e-288', '5.992766738381379e-279', '1.615252816880116e-305', '4.532892221645591e-264', '0.0', '0.0', '0.0', '6.822440151228763e-261', '0.0', '1.6614555335929494e-267', '2.869838019772172e-220', '1.2027292714114282e-208', '3.0001021549542515e-184', '3.2445105132810426e-185', '6.6340487057303996e-189', '1.424108948195798e-193', '9.097878921605617e-171', '4.748663065713866e-173', '7.83051544805238e-173', '2.7676003374725095e-193', '1.1768208839729546e-184', '3.6964361695911543e-174', '4.4058789220827235e-170', '1.482882051520095e-216', '7.023693427316128e-168', '8.687258925042393e-120', '8.818201458750309e-159', '7.958808369876824e-157', '1.5956647201846868e-133', '2.8711989762093354e-140', '3.3882335650448296e-151', '6.7803550322984166e-133', '8.866305234608348e-152', '3.3688228042810866e-149', '7.090835159433634e-146', '2.327234132061694e-167', '1.0097833260984798e-153', '9.817641653474912e-121', '4.2624047725744735e-135', '8.048867908733197e-155', '7.508478487173168e-118', '2.5481260269713445e-114', '1.9194282014246282e-112']
+Accuracy for 1k: 0.3549
+Accuracy for full dataset: 0.3805
+Chosen feature intersection: {1, 4, 21}
+Top-5 at higher: {1, 163, 4, 21, 149}
+Part (a) : Index 1 : first_person_pronouns
+Index  4: coordinating_conjuctions
+Index 21 : BGL_IMG_STDDEV
+Part (b) : More often than not, the lesser the training data, the higher the p-values. The more powerful the feature the lower the p-value.
+As the amount of data increases, a model has more information to figure what the predicitve power of a certain feature. This makes sense as, a features power to segregate features on their ability to separate classes should go down if the model get more information to make that decision.
+Part (c) : 1 : First Person Prounouns, 4 : Coordinating Conjunctions, 21 : BGL_IMG_STDDEV, 149 : Receptiviti_Intellectual, 163 : Receptiviti_Self-Conscious
+The most interesting of the features in (c) are 149(Receptiviti_Intellectual) and 163(Receptiviti_Self-Conscious. There has long been known a correlation betwwen political alliance and intellectual capacity. Some studies have even trie3d to shoe that Left Winged people have higher IQs as copared to their right counterparts.
+As for self conscious, this one is intersting because it posits that the a certain allegiance actually is correlated with the perception of one's image, which the more one thinks about - the more it starts  to make sense.

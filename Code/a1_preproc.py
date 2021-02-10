@@ -104,7 +104,7 @@ def main(args):
             for index in range(start, start+desired_lines, 1):
                 i = index % len(data)
                 line = data[i]
-                j = json.load(line)
+                j = json.loads(line)
                 cat = str(file)
                 d = {"cat": cat, "id": j["id"], "body": preproc1(j["body"])}
                 allOutput.append(d)

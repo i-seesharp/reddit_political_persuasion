@@ -30,6 +30,28 @@ SLANG = {
     'afn', 'bbs', 'cya', 'ez', 'f2f', 'gtr', 'ic', 'jk', 'k', 'ly', 'ya',
     'nm', 'np', 'plz', 'ru', 'so', 'tc', 'tmi', 'ym', 'ur', 'u', 'sol', 'fml'}
 
+def bga_helper():
+    path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
+    bgl_file = open(path, "r")
+    statistics = {}
+    for data in reader(bgl_file):
+        statistics[data["WORD"]] = data
+    bgl_file.close()
+    return statistics
+
+bgl_metrics = bga_helper()
+
+def wa_helper():
+    path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
+    wa_file = open(path, "r")
+    statistics = {}
+    for data in reader(wa_file):
+        statistics[data["Word"]] = data
+    wa_file.close()
+    return statistics
+
+wa_metrics = wa_helper()
+
 def first_person_pronouns(worded_sentences):
     s = 0
     for words in worded_sentences:
@@ -205,15 +227,7 @@ def average_aoa(worded_sentences):
     average = []
     query = "AoA (100-700)"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
-        bgl_file = open(path, "r")
-        statistics = {}
-        for data in reader(bgl_file):
-            statistics[data["WORD"]] = data
-        bgl_file.close()
-        return statistics
-    values = helper_function()
+    values = bgl_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -229,15 +243,7 @@ def average_img(worded_sentences):
     average = []
     query = "IMG"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
-        bgl_file = open(path, "r")
-        statistics = {}
-        for data in reader(bgl_file):
-            statistics[data["WORD"]] = data
-        bgl_file.close()
-        return statistics
-    values = helper_function()
+    values = bgl_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -253,15 +259,7 @@ def average_fam(worded_sentences):
     average = []
     query = "FAM"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
-        bgl_file = open(path, "r")
-        statistics = {}
-        for data in reader(bgl_file):
-            statistics[data["WORD"]] = data
-        bgl_file.close()
-        return statistics
-    values = helper_function()
+    values = bgl_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -277,15 +275,7 @@ def std_dev_aoa(worded_sentences):
     metrics = []
     query = "AoA (100-700)"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
-        bgl_file = open(path, "r")
-        statistics = {}
-        for data in reader(bgl_file):
-            statistics[data["WORD"]] = data
-        bgl_file.close()
-        return statistics
-    values = helper_function()
+    values = bgl_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -301,15 +291,7 @@ def std_dev_img(worded_sentences):
     metrics = []
     query = "IMG"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
-        bgl_file = open(path, "r")
-        statistics = {}
-        for data in reader(bgl_file):
-            statistics[data["WORD"]] = data
-        bgl_file.close()
-        return statistics
-    values = helper_function()
+    values = bgl_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -325,15 +307,7 @@ def std_dev_fam(worded_sentences):
     metrics = []
     query = "FAM"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/BristolNorms+GilhoolyLogie.csv"
-        bgl_file = open(path, "r")
-        statistics = {}
-        for data in reader(bgl_file):
-            statistics[data["WORD"]] = data
-        bgl_file.close()
-        return statistics
-    values = helper_function()
+    values = bgl_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -348,17 +322,8 @@ def std_dev_fam(worded_sentences):
 def average_vmeansum(worded_sentences):
     average = []
     query = "V.Mean.Sum"
-
-    def helper_function():
-        path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
-        wa_file = open(path, "r")
-        statistics = {}
-        for data in reader(wa_file):
-            statistics[data["Word"]] = data
-        wa_file.close()
-        return statistics
    
-    values = helper_function()
+    values = wa_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -374,15 +339,7 @@ def average_ameansum(worded_sentences):
     average = []
     query = "A.Mean.Sum"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
-        wa_file = open(path, "r")
-        statistics = {}
-        for data in reader(wa_file):
-            statistics[data["Word"]] = data
-        wa_file.close()
-        return statistics
-    values = helper_function()
+    values = wa_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -398,15 +355,7 @@ def average_dmeansum(worded_sentences):
     average = []
     query = "D.Mean.Sum"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
-        wa_file = open(path, "r")
-        statistics = {}
-        for data in reader(wa_file):
-            statistics[data["Word"]] = data
-        wa_file.close()
-        return statistics
-    values = helper_function()
+    values = wa_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -422,15 +371,7 @@ def std_dev_vmeansum(worded_sentences):
     metrics = []
     query = "V.Mean.Sum"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
-        wa_file = open(path, "r")
-        statistics = {}
-        for data in reader(wa_file):
-            statistics[data["Word"]] = data
-        wa_file.close()
-        return statistics
-    values = helper_function()
+    values = wa_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -445,15 +386,7 @@ def std_dev_ameansum(worded_sentences):
     metrics = []
     query = "A.Mean.Sum"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
-        wa_file = open(path, "r")
-        statistics = {}
-        for data in reader(wa_file):
-            statistics[data["Word"]] = data
-        wa_file.close()
-        return statistics
-    values = helper_function()
+    values = wa_metrics
     for words in worded_sentences:
         for lst in words:
             try:
@@ -468,15 +401,7 @@ def std_dev_dmeansum(worded_sentences):
     metrics = []
     query = "D.Mean.Sum"
 
-    def helper_function():
-        path = "/u/cs401/Wordlists/Ratings_Warriner_et_al.csv"
-        wa_file = open(path, "r")
-        statistics = {}
-        for data in reader(wa_file):
-            statistics[data["Word"]] = data
-        wa_file.close()
-        return statistics
-    values = helper_function()
+    values = wa_metrics
     for words in worded_sentences:
         for lst in words:
             try:

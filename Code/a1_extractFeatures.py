@@ -520,7 +520,7 @@ def extract2_helper():
     lookup = {}
     classes = ["Alt", "Center", "Left", "Right"]
     for cat in classes:
-        cat_path = liwc_api_path+"/"+cat+"_IDS.txt"
+        cat_path = liwc_api_path+"/"+cat+"_IDs.txt"
         cat_file = open(cat_path, "r")
         features = np.load(liwc_api_path+"/"+cat+"_feats.dat.npy")
 
